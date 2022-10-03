@@ -11,7 +11,7 @@ import { Beer } from '../models';
 export class StoreService {
   constructor(private http: HttpClient) {}
 
-  getAllBeers(page = '1', perPage = '25'): Observable<Beer[]> {
+  getBeers(page = '1', perPage = '25'): Observable<Beer[]> {
     return this.http.get<Beer[]>(
       `${env.BASE_URL}/beers?page=${page}&per_page=${perPage}`
     );

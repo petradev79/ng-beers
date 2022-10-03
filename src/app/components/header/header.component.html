@@ -2,7 +2,12 @@
   <a routerLink="home">Beers store</a>
   <!-- primary, accent, or warn -->
   <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon [matBadge]="1" matBadgeColor="accent">shopping_cart</mat-icon>
+    <mat-icon
+      [matBadge]="itemsQuantity"
+      [matBadgeHidden]="!itemsQuantity"
+      matBadgeColor="accent"
+      >shopping_cart</mat-icon
+    >
   </button>
   <mat-menu #menu="matMenu">
     <div class="p-3 divide-y divide-solid">

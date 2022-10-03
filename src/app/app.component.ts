@@ -1,8 +1,17 @@
 import { Component } from '@angular/core';
 
+import { Cart } from './models';
+import { CartService } from './services/cart.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {}
+export class AppComponent {
+  cart: Cart = { items: [] };
+
+  constructor(private cartService: CartService) {}
+
+  ngOnInit() {}
+}

@@ -1,1 +1,9 @@
-<p>home works!</p>
+<div style="display: flex; gap: 10px">
+  <div
+    *ngFor="let beer of beers"
+    style="padding: 10px; background: rgb(68, 64, 64)"
+    (click)="onAddToCart(beer)"
+  >
+    <p>{{ beer.name }}</p>
+  </div>
+</div>

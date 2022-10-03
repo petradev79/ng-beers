@@ -1,3 +1,12 @@
+export interface Cart {
+  items: Array<CartItem>;
+}
+
+export interface CartItem {
+  beer: Beer;
+  quantity: number;
+}
+
 export interface Beer {
   abv: number;
   attenuation_level: number;

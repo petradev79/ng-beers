@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { Beer } from 'src/app/models';
+import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
@@ -14,19 +16,29 @@ export class HomeComponent implements OnInit, OnDestroy {
   beers: Beer[] | undefined;
   beerSubscription: Subscription | undefined;
 
-  constructor(private storeService: StoreService) {}
+  constructor(
+    private storeService: StoreService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
-    this.getBeers();
+    this.onGetBeers();
   }
 
-  getBeers(): void {
+  onGetBeers(): void {
     this.beerSubscription = this.storeService
-      .getAllBeers(this.page, this.perPage)
+      .getBeers(this.page, this.perPage)
       .subscribe((beers) => {
         console.log(beers);
         this.beers = beers;
       });
+  }
+
+  onAddToCart(beer: Beer): void {
+    this.cartService.addToCart({
+      beer,
+      quantity: 1,
+    });
   }
 
   ngOnDestroy(): void {
