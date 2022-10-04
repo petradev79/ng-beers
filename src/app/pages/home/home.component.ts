@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   beers: Beer[] | undefined;
   beerSubscription: Subscription | undefined;
   filter: Filter | undefined;
+  sort = 'up';
 
   constructor(
     private storeService: StoreService,
@@ -27,6 +28,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.onGetBeers();
+  }
+
+  sortedArray(arr: Beer[]) {
+    if (this.sort === 'up') {
+      return arr.sort((a, b) => a.abv - b.abv);
+    } else {
+      return arr.sort((a, b) => b.abv - a.abv);
+    }
   }
 
   onShowFilter(newFilter: Filter) {
@@ -43,8 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.beerSubscription = this.storeService
       .getBeers(this.perPage, this.filter)
       .subscribe((beers) => {
-        console.log(beers);
-        this.beers = beers;
+        this.beers = this.sortedArray(beers);
       });
   }
 
@@ -63,6 +71,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   onColumnsUpdated(colsNum: number) {
     this.cols = colsNum;
     this.rowHeight = ROWS_HEIGHT[colsNum];
+  }
+
+  onSortUpdated(newSort: string) {
+    this.sort = newSort;
+    this.onGetBeers();
   }
 
   ngOnDestroy(): void {

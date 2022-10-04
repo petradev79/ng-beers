@@ -1,23 +1,46 @@
 <mat-card class="mb-4">
   <div class="flex justify-between items-center">
     <div>
-      <button mat-button [matMenuTriggerFor]="menu" class="flex items-center">
-        Show {{ itemsPerPage }}
+      <button
+        mat-button
+        [matMenuTriggerFor]="sortByMenu"
+        class="flex items-center"
+      >
+        <mat-icon *ngIf="sort === 'down'">arrow_downward</mat-icon>
+        <mat-icon *ngIf="sort === 'up'">arrow_upwards</mat-icon>
+        Sort by Beer ABV
         <mat-icon>expand_more</mat-icon>
       </button>
-      <mat-menu #menu="matMenu" xPosition="after">
-        <button (click)="onItemsPerPageChange(15)" mat-menu-item>
-          15 beers
+      <mat-menu #sortByMenu="matMenu">
+        <button (click)="onSortChange('up')" mat-menu-item>
+          Lowest to Highest
+          <mat-icon>arrow_upwards</mat-icon>
         </button>
-        <button (click)="onItemsPerPageChange(25)" mat-menu-item>
-          25 beers
-        </button>
-        <button (click)="onItemsPerPageChange(50)" mat-menu-item>
-          50 beers
+        <button (click)="onSortChange('down')" mat-menu-item>
+          Highest to Lowest
+          <mat-icon>arrow_downward</mat-icon>
         </button>
       </mat-menu>
     </div>
-    <div class="flex items-center">
+
+    <div class="flex items-center gap-2">
+      <div>
+        <button mat-button [matMenuTriggerFor]="menu" class="flex items-center">
+          Show {{ itemsPerPage }}
+          <mat-icon>expand_more</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="after">
+          <button (click)="onItemsPerPageChange(15)" mat-menu-item>
+            15 beers
+          </button>
+          <button (click)="onItemsPerPageChange(25)" mat-menu-item>
+            25 beers
+          </button>
+          <button (click)="onItemsPerPageChange(50)" mat-menu-item>
+            50 beers
+          </button>
+        </mat-menu>
+      </div>
       <button (click)="onColumnsChange(1)">
         <mat-icon>view_list</mat-icon>
       </button>
