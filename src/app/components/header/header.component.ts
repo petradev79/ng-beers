@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Cart } from 'src/app/models';
+import { Cart, CartItem } from 'src/app/models';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -35,5 +35,11 @@ export class HeaderComponent implements OnInit {
 
   getTotal() {}
 
-  onClearCart() {}
+  onRemoveItem(item: CartItem): void {
+    this.cartService.removeFromCart(item);
+  }
+
+  onClearCart() {
+    this.cartService.clearCart();
+  }
 }

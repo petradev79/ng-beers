@@ -10,25 +10,31 @@
     >
   </button>
   <mat-menu #menu="matMenu">
-    <div class="p-3 divide-y divide-solid">
+    <div class="p-5 divide-y divide-solid">
       <div class="pb-3 flex justify-between">
-        <span class="mr-16">{{ cart.items.length }} items</span>
-        <a routerLink="cart">View Cart</a>
+        <span class="mr-16">items: {{ cart.items.length }}</span>
+        <a>View Cart</a>
+      </div>
+      <div *ngIf="!cart.items.length" class="py-3">
+        <span>No items in Cart</span>
       </div>
       <div *ngIf="cart.items.length" class="py-3">
         <div
           *ngFor="let item of cart.items"
-          class="flex justify-between font-light mb-2"
+          class="flex justify-between items-end gap-5 font-light mb-3"
         >
-          {{ item.beer.name | slice: 0:15 }} x {{ item.quantity }}
-          <span class="font-bold not-italic">{{ item.beer.abv }} %</span>
+          <div class="flex flex-col">
+            <span class="font-bold"
+              >{{ item.beer.name | slice: 0:15 }} x {{ item.quantity }}</span
+            >
+            <span>{{ item.beer.tagline | slice: 0:20 }}</span>
+          </div>
+
+          <span>{{ item.beer.abv }}% alc</span>
+          <!-- <button (click)="onRemoveItem(item)" class="w-9 h-9">
+            <mat-icon>delete_outline</mat-icon>
+          </button> -->
         </div>
-      </div>
-      <div class="flex justify-between py-3 font-light">
-        Total:
-        <!-- <span class="font-bold not-italic">{{
-          getTotal(cart.items) | currency
-        }}</span> -->
       </div>
       <div class="pt-3 flex justify-between">
         <button (click)="onClearCart()" class="w-9 h-9">
