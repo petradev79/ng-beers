@@ -1,3 +1,29 @@
+export interface Cart {
+  items: Array<CartItem>;
+}
+
+export interface CartItem {
+  beer: Beer;
+  quantity: number;
+}
+
+export interface Filter {
+  title: string;
+  name: string;
+  value: string;
+}
+
+export interface Filters {
+  malt: {
+    title: string;
+    maltFilters: Filter[];
+  };
+  hops: {
+    title: string;
+    hopsFilters: Filter[];
+  };
+}
+
 export interface Beer {
   abv: number;
   attenuation_level: number;

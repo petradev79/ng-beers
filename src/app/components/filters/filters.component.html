@@ -1,0 +1,34 @@
+<!-- <mat-expansion-panel *ngIf="filters">
+  <mat-expansion-panel-header>
+    <mat-panel-title> FILTERS </mat-panel-title>
+  </mat-expansion-panel-header>
+  
+</mat-expansion-panel> -->
+<div class="h-full flex flex-col justify-between">
+  <div>
+    <h2>LIST OF FILTERS</h2>
+    <mat-selection-list #list [multiple]="false">
+      <div>
+        <div mat-subheader>Choose Malt Filter</div>
+        <mat-list-option
+          *ngFor="let filter of filters.malt.maltFilters"
+          [value]="filter.value"
+        >
+          <button (click)="onClickFilter(filter)">{{ filter.title }}</button>
+        </mat-list-option>
+      </div>
+      <div class="mt-10">
+        <div mat-subheader>Choose Hops Filter</div>
+        <mat-list-option
+          *ngFor="let filter of filters.hops.hopsFilters"
+          [value]="filter.value"
+        >
+          <button (click)="onClickFilter(filter)">{{ filter.title }}</button>
+        </mat-list-option>
+      </div>
+    </mat-selection-list>
+  </div>
+  <div>
+    <button (click)="onClearFilter()">CLEAR FILTER</button>
+  </div>
+</div>

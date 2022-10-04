@@ -1,1 +1,24 @@
-<p>home works!</p>
+<mat-drawer-container [autosize]="true" class="min-h-full">
+  <mat-drawer mode="side" opened class="p-10 mt-16">
+    <app-filters
+      (clearFilter)="onClearFilter()"
+      (showFilter)="onShowFilter($event)"
+    ></app-filters>
+  </mat-drawer>
+  <mat-drawer-content class="p-6 mt-16">
+    <app-list-header
+      (columnsCountChange)="onColumnsUpdated($event)"
+      (itemsPerPageChange)="onItemsPerPageUpdated($event)"
+    ></app-list-header>
+    <mat-grid-list gutterSize="16" [cols]="cols" [rowHeight]="rowHeight">
+      <mat-grid-tile *ngFor="let beer of beers">
+        <app-card
+          (addToCart)="onAddToCart($event)"
+          class="w-full"
+          [beer]="beer"
+          [fullWidthMode]="cols === 1"
+        ></app-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-drawer-content>
+</mat-drawer-container>

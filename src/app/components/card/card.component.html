@@ -1,0 +1,29 @@
+<mat-card *ngIf="beer" [ngClass]="{ 'text-center': !fullWidthMode }">
+  <div [ngClass]="{ flex: fullWidthMode }">
+    <img
+      class="mb-1 mx-auto"
+      [ngClass]="{ 'h-[200px]': !fullWidthMode, 'h-[360px]': fullWidthMode }"
+      [src]="beer.image_url"
+    />
+    <div
+      class="w-full"
+      [ngClass]="{ 'px-8 flex flex-col justify-between': fullWidthMode }"
+    >
+      <div>
+        <h2>{{ beer.name | slice: 0:20 }}</h2>
+        <p>
+          {{ beer.tagline }}
+        </p>
+        <p *ngIf="fullWidthMode">
+          {{ beer.description }}
+        </p>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-green-400">{{ beer.abv }}% Alcohol</span>
+        <button (click)="onClick()">
+          <mat-icon class="text-green-500">shopping_cart</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-card>
