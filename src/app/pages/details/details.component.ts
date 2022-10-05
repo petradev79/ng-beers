@@ -11,7 +11,7 @@ import { StoreService } from 'src/app/services/store.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   beerId!: number;
-  beer: Beer | undefined;
+  beer: Beer[] | undefined;
   beerSubscription: Subscription | undefined;
 
   constructor(

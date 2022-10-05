@@ -19,7 +19,7 @@ export class StoreService {
     );
   }
 
-  getBeerDetails(id: number): Observable<Beer> {
-    return this.http.get<Beer>(`${env.BASE_URL}/beers/${id}`);
+  getBeerDetails(id: number): Observable<Beer[]> {
+    return this.http.get<Beer[]>(`${env.BASE_URL}/beers/${id}`);
   }
 }

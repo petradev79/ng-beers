@@ -1,22 +1,37 @@
-<mat-card class="max-w-7xl mx-auto mt-24" *ngIf="beer">
-  <mat-card-header>
-    <div
-      mat-card-avatar
-      [ngStyle]="{ background: 'url(' + beer.image_url + ')' }"
-    ></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image [src]="beer.image_url" alt="Beer" />
-  <mat-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz
-      breeds of dog from Japan. A small, agile dog that copes very well with
-      mountainous terrain, the Shiba Inu was originally bred for hunting.
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card>
+<div *ngIf="beer" class="max-w-7xl flex gap-36 mx-auto mt-24">
+  <div
+    class="flex-1 flex justify-between items-center gap-20 p-10"
+    style="border: 1px solid red"
+  >
+    <img class="w-20" [src]="beer[0].image_url" />
+    <div>
+      <h3>{{ beer[0].name }}</h3>
+      <p>Dog Breed</p>
+      <p>{{ beer[0].description }}</p>
+    </div>
+  </div>
+  <div class="flex-1 p-10" style="border: 1px solid red">
+    <div>
+      <h4>Ingredients:</h4>
+      <span>{{ beer[0].ingredients.yeast }}</span>
+      <h5>Hops:</h5>
+      <div class="grid gap-x-8 grid-cols-2">
+        <div
+          *ngFor="let hop of beer[0].ingredients.hops"
+          class="flex justify-between flex-wrap py-1 mb-2 border-b"
+        >
+          <div>
+            <p>Name: {{ hop.name }}</p>
+            <p>Attribute: {{ hop.attribute }}</p>
+          </div>
+          <div>
+            <p>add at the {{ hop.add }}</p>
+            <p>{{ hop.amount.value }} {{ hop.amount.unit }}</p>
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p>{{ beer[0].description }}</p>
+  </div>
+</div>
