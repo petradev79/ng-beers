@@ -10,8 +10,34 @@
   <div class="flex-1 p-10">
     <div>
       <h3>Ingredients:</h3>
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <!-- use a disabled button to provide padding for tree leaf -->
+          <button mat-icon-button disabled></button>
+          {{ node.name }}
+        </mat-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-tree-node
+          *matTreeNodeDef="let node; when: hasChild"
+          matTreeNodePadding
+        >
+          <button
+            mat-icon-button
+            matTreeNodeToggle
+            [attr.aria-label]="'Toggle ' + node.name"
+          >
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{
+                treeControl.isExpanded(node) ? "expand_more" : "chevron_right"
+              }}
+            </mat-icon>
+          </button>
+          {{ node.name }}
+        </mat-tree-node>
+      </mat-tree>
 
-      <h4>Hops:</h4>
+      <!-- <h4>Hops:</h4>
       <div class="grid gap-x-8 grid-cols-2">
         <div
           *ngFor="let hop of beer[0].ingredients.hops"
@@ -43,7 +69,7 @@
           </div>
         </div>
       </div>
-      <span>yeast: {{ beer[0].ingredients.yeast }}</span>
+      <span>yeast: {{ beer[0].ingredients.yeast }}</span> -->
     </div>
   </div>
 </div>

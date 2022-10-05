@@ -15,6 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTreeModule } from '@angular/material/tree';
 // import { MatExpansionModule } from '@angular/material/expansion';
 // import { MatPaginatorModule } from '@angular/material/paginator';
 
@@ -54,6 +55,7 @@ import { CartComponent } from './pages/cart/cart.component';
     MatListModule,
     MatTableModule,
     MatButtonModule,
+    MatTreeModule,
     // MatExpansionModule,
     // MatPaginatorModule,
   ],
