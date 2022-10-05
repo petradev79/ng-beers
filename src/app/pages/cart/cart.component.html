@@ -3,7 +3,11 @@
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef>Image</th>
       <td mat-cell *matCellDef="let element">
-        <img src="{{ element.beer.image_url }}" alt="beer" class="w-[7px]" />
+        <img
+          src="{{ element.beer.image_url }}"
+          alt="beer"
+          class="w-[10px] ml-3"
+        />
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
@@ -14,13 +18,37 @@
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
+    <ng-container matColumnDef="first_brewed">
+      <th mat-header-cell *matHeaderCellDef>Produced Since</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.beer.first_brewed }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
     <ng-container matColumnDef="alcohol">
-      <th mat-header-cell *matHeaderCellDef>Alcohol</th>
+      <th mat-header-cell *matHeaderCellDef>Alcohol ABV</th>
       <td mat-cell *matCellDef="let element">{{ element.beer.abv }}%</td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
+    <ng-container matColumnDef="bitterness">
+      <th mat-header-cell *matHeaderCellDef>Bitterness IBU</th>
+      <td mat-cell *matCellDef="let element">{{ element.beer.ibu }}</td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="color">
+      <th mat-header-cell *matHeaderCellDef>Color EBC</th>
+      <td mat-cell *matCellDef="let element">{{ element.beer.ebc }}</td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="attenuation_level">
+      <th mat-header-cell *matHeaderCellDef>Ferments Degree</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.beer.attenuation_level }}° deg
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
     <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef class="align-center">Quantity</th>
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
       <td mat-cell *matCellDef="let element">
         <button
           mat-icon-button
@@ -58,14 +86,6 @@
         </button>
       </td>
       <td mat-footer-cell *matFooterCellDef>
-        <!-- <button
-          (click)="onCheckout()"
-          mat-raised-button
-          color="primary"
-          class="float-right"
-        >
-          Proceed To Checkout
-        </button> -->
         <button
           color="accent"
           mat-button

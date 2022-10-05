@@ -9,13 +9,18 @@ import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit, OnDestroy {
   cart: Cart = { items: [] };
   displayedColumns: string[] = [
     'image',
     'name',
+    'first_brewed',
     'alcohol',
+    'bitterness',
+    'color',
+    'attenuation_level',
     'quantity',
     'action',
   ];

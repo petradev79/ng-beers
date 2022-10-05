@@ -14,3 +14,10 @@ body {
 mat-toolbar {
   z-index: 10;
 }
+mat-drawer {
+  position: fixed !important;
+  height: calc(100vh - 64px);
+}
+mat-selection-list * {
+  text-align: left !important;
+}
