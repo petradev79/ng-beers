@@ -1,11 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Beer } from 'src/app/models';
@@ -16,13 +10,12 @@ import { CartService } from 'src/app/services/cart.service';
   templateUrl: './card.component.html',
 })
 export class CardComponent implements OnInit, OnDestroy {
-  @Input() beer: Beer | undefined;
+  @Input() beer!: Beer;
   @Input() fullWidthMode = false;
-  @Output() addToCart = new EventEmitter();
   isItemInCart = false;
   cartSubscription: Subscription | undefined;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.cartSubscription = this.cartService.cart.subscribe((_cart) => {
@@ -32,8 +25,16 @@ export class CardComponent implements OnInit, OnDestroy {
     });
   }
 
-  onClick() {
-    this.addToCart.emit(this.beer);
+  onAddToCart(e: MouseEvent): void {
+    e.stopPropagation();
+    this.cartService.addToCart({
+      beer: this.beer,
+      quantity: 1,
+    });
+  }
+
+  onGoToDetails() {
+    this.router.navigate(['beer-details', this.beer.id]);
   }
 
   ngOnDestroy(): void {

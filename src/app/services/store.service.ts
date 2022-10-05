@@ -18,4 +18,8 @@ export class StoreService {
       }per_page=${perPage}`
     );
   }
+
+  getBeerDetails(id: number): Observable<Beer> {
+    return this.http.get<Beer>(`${env.BASE_URL}/beers/${id}`);
+  }
 }

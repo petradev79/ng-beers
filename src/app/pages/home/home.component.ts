@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 
 import { Beer, Filter } from 'src/app/models';
 import { StoreService } from 'src/app/services/store.service';
-import { CartService } from 'src/app/services/cart.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
@@ -16,14 +15,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   rowHeight: number = ROWS_HEIGHT[this.cols];
   perPage = '25';
   beers: Beer[] | undefined;
-  beerSubscription: Subscription | undefined;
+  beersSubscription: Subscription | undefined;
   filter: Filter | undefined;
   sort = 'up';
 
-  constructor(
-    private storeService: StoreService,
-    private cartService: CartService
-  ) {}
+  constructor(private storeService: StoreService) {}
 
   ngOnInit(): void {
     this.onGetBeers();
@@ -48,18 +44,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onGetBeers(): void {
-    this.beerSubscription = this.storeService
+    this.beersSubscription = this.storeService
       .getBeers(this.perPage, this.filter)
       .subscribe((beers) => {
         this.beers = this.sortedArray(beers);
       });
-  }
-
-  onAddToCart(beer: Beer): void {
-    this.cartService.addToCart({
-      beer,
-      quantity: 1,
-    });
   }
 
   onItemsPerPageUpdated(numberPerPage: number) {
@@ -78,8 +67,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.beerSubscription) {
-      this.beerSubscription.unsubscribe();
+    if (this.beersSubscription) {
+      this.beersSubscription.unsubscribe();
     }
   }
 }

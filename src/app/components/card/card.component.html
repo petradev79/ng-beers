@@ -1,4 +1,9 @@
-<mat-card *ngIf="beer" [ngClass]="{ 'text-center': !fullWidthMode }">
+<mat-card
+  *ngIf="beer"
+  class="cursor-pointer"
+  [ngClass]="{ 'text-center': !fullWidthMode }"
+  (click)="onGoToDetails()"
+>
   <div [ngClass]="{ flex: fullWidthMode }">
     <img
       class="mb-1 mx-auto"
@@ -20,7 +25,7 @@
       </div>
       <div class="flex justify-between items-center">
         <span>{{ beer.abv }}% Alcohol</span>
-        <button mat-icon-button color="accent" (click)="onClick()">
+        <button mat-icon-button color="accent" (click)="onAddToCart($event)">
           <mat-icon *ngIf="!isItemInCart">favorite_border</mat-icon>
           <mat-icon *ngIf="isItemInCart">favorite</mat-icon>
         </button>

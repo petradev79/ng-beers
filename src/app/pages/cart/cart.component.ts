@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 
 import { Cart, CartItem } from '../../models';
 import { CartService } from '../../services/cart.service';
-// import { loadStripe } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-cart',
@@ -50,23 +49,6 @@ export class CartComponent implements OnInit, OnDestroy {
 
   onRemoveQuantity(item: CartItem): void {
     this.cartService.removeQuantity(item);
-  }
-
-  onCheckout(): void {
-    // this.http
-    //   .post('http://localhost:4242/checkout', {
-    //     items: this.cart.items,
-    //   })
-    //   .subscribe(async (res: any) => {
-    //     let stripe = await loadStripe('your token');
-    //     stripe?.redirectToCheckout({
-    //       sessionId: res.id,
-    //     });
-    //   });
-  }
-
-  getTotal(items: CartItem[]) {
-    // return this.cartService.getTotal(items);
   }
 
   ngOnDestroy() {
