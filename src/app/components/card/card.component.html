@@ -21,7 +21,8 @@
       <div class="flex justify-between items-center">
         <span>{{ beer.abv }}% Alcohol</span>
         <button mat-icon-button color="accent" (click)="onClick()">
-          <mat-icon>favorite_border</mat-icon>
+          <mat-icon *ngIf="!isItemInCart">favorite_border</mat-icon>
+          <mat-icon *ngIf="isItemInCart">favorite</mat-icon>
         </button>
       </div>
     </div>
