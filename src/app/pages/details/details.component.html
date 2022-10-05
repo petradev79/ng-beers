@@ -1,8 +1,5 @@
 <div *ngIf="beer" class="max-w-7xl flex gap-36 mx-auto mt-24">
-  <div
-    class="flex-1 flex justify-between items-center gap-20 p-10"
-    style="border: 1px solid red"
-  >
+  <div class="flex-1 flex justify-between items-center gap-20 p-10">
     <img class="w-20" [src]="beer[0].image_url" />
     <div>
       <h3>{{ beer[0].name }}</h3>
@@ -10,11 +7,11 @@
       <p>{{ beer[0].description }}</p>
     </div>
   </div>
-  <div class="flex-1 p-10" style="border: 1px solid red">
+  <div class="flex-1 p-10">
     <div>
-      <h4>Ingredients:</h4>
-      <span>{{ beer[0].ingredients.yeast }}</span>
-      <h5>Hops:</h5>
+      <h3>Ingredients:</h3>
+
+      <h4>Hops:</h4>
       <div class="grid gap-x-8 grid-cols-2">
         <div
           *ngFor="let hop of beer[0].ingredients.hops"
@@ -31,7 +28,22 @@
           </div>
         </div>
       </div>
+      <h4>Malt:</h4>
+      <div class="grid gap-x-8 grid-cols-2">
+        <div
+          *ngFor="let mal of beer[0].ingredients.malt"
+          class="flex justify-between flex-wrap py-1 mb-2 border-b"
+        >
+          <div>
+            <p>Name: {{ mal.name }}</p>
+          </div>
+          <div>
+            <p>{{ mal.amount.value }} {{ mal.amount.unit }}</p>
+            <p></p>
+          </div>
+        </div>
+      </div>
+      <span>yeast: {{ beer[0].ingredients.yeast }}</span>
     </div>
-    <p>{{ beer[0].description }}</p>
   </div>
 </div>
