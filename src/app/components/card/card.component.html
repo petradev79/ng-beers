@@ -18,10 +18,10 @@
           {{ beer.description }}
         </p>
       </div>
-      <div class="flex justify-between">
-        <span class="text-green-400">{{ beer.abv }}% Alcohol</span>
-        <button (click)="onClick()">
-          <mat-icon class="text-green-500">shopping_cart</mat-icon>
+      <div class="flex justify-between items-center">
+        <span>{{ beer.abv }}% Alcohol</span>
+        <button mat-icon-button color="accent" (click)="onClick()">
+          <mat-icon>favorite_border</mat-icon>
         </button>
       </div>
     </div>

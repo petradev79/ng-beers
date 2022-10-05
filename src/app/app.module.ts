@@ -13,6 +13,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 // import { MatExpansionModule } from '@angular/material/expansion';
 // import { MatPaginatorModule } from '@angular/material/paginator';
 
@@ -23,6 +25,7 @@ import { FiltersComponent } from './components/filters/filters.component';
 import { CardComponent } from './components/card/card.component';
 import { DetailsComponent } from './pages/details/details.component';
 import { ListHeaderComponent } from './components/list-header/list-header.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,7 @@ import { ListHeaderComponent } from './components/list-header/list-header.compon
     CardComponent,
     DetailsComponent,
     ListHeaderComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,8 @@ import { ListHeaderComponent } from './components/list-header/list-header.compon
     MatCardModule,
     MatSnackBarModule,
     MatListModule,
+    MatTableModule,
+    MatButtonModule,
     // MatExpansionModule,
     // MatPaginatorModule,
   ],
