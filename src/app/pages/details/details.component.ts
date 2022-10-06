@@ -101,7 +101,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
       .getBeerDetails(this.beerId)
       .subscribe((_beer) => {
         this.beer = _beer;
-        console.log(this.beer);
         this.ingredientsData = [
           {
             name: 'Hops',

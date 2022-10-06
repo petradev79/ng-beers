@@ -17,6 +17,7 @@ mat-toolbar {
 mat-drawer {
   position: fixed !important;
   height: calc(100vh - 64px);
+  border: none !important;
 }
 mat-selection-list * {
   text-align: left !important;
