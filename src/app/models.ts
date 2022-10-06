@@ -48,7 +48,7 @@ export interface Beer {
   volume: { value: number; unit: string };
 }
 
-export interface Ingredients {
+interface Ingredients {
   hops: Hops[];
   malt: Malt[];
   yeast: string;
@@ -64,7 +64,7 @@ export interface Hops {
   name: string;
 }
 
-interface Malt {
+export interface Malt {
   amount: {
     value: number;
     unit: string;

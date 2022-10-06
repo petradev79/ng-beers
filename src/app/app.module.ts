@@ -27,6 +27,7 @@ import { CardComponent } from './components/card/card.component';
 import { DetailsComponent } from './pages/details/details.component';
 import { ListHeaderComponent } from './components/list-header/list-header.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { TreeComponent } from './components/tree/tree.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { CartComponent } from './pages/cart/cart.component';
     DetailsComponent,
     ListHeaderComponent,
     CartComponent,
+    TreeComponent,
   ],
   imports: [
     BrowserModule,

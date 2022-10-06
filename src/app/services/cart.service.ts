@@ -27,9 +27,9 @@ export class CartService {
     this.snackBar.open('1 item added to cart.', 'Ok', { duration: 3000 });
   }
 
-  removeFromCart(item: CartItem, updateCart = true): CartItem[] {
+  removeFromCart(id: number, updateCart = true): CartItem[] {
     const filteredItems = this.cart.value.items.filter(
-      (_item) => _item.beer.id !== item.beer.id
+      (_item) => _item.beer.id !== id
     );
 
     if (updateCart) {
@@ -57,7 +57,7 @@ export class CartService {
     });
 
     if (itemForRemoval) {
-      filteredItems = this.removeFromCart(itemForRemoval, false);
+      filteredItems = this.removeFromCart(itemForRemoval.beer.id, false);
     }
 
     this.cart.next({ items: filteredItems });

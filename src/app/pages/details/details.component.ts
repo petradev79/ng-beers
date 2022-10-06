@@ -1,26 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FlatTreeControl } from '@angular/cdk/tree';
 
-import {
-  MatTreeFlatDataSource,
-  MatTreeFlattener,
-} from '@angular/material/tree';
-
-import { Beer, Hops, Ingredients } from 'src/app/models';
+import { Beer, Hops, Malt } from 'src/app/models';
+import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from 'src/app/services/store.service';
 
-interface ExampleFlatNode {
-  expandable: boolean;
+interface NodeData {
   name: string;
-  level: number;
+  children?: NodeData[];
 }
 
-interface FoodNode {
-  name: string;
-  children?: FoodNode[];
-}
+type NodeChildData = Hops | Malt;
 
 @Component({
   selector: 'app-details',
@@ -28,45 +19,81 @@ interface FoodNode {
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   beerId!: number;
-  beer: Beer[] | undefined;
+  beer!: Beer[];
   beerSubscription: Subscription | undefined;
-  TREE_DATA: FoodNode[] = [];
+  ingredientsData: NodeData[] | undefined;
+  foodData: NodeData[] | undefined;
+  tipsData: NodeData[] | undefined;
+  cartSubscription: Subscription | undefined;
+  isItemInCart = false;
 
-  private _transformer = (node: FoodNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      level: level,
-    };
-  };
+  formatIngredientChildData(arr: NodeChildData[]) {
+    let newArr = [
+      ...arr.map((node: NodeChildData) => {
+        return {
+          name: `${node.name} ${node.amount.value} ${node.amount.unit}`,
+        };
+      }),
+    ];
+    return newArr;
+  }
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
-    (node) => node.level,
-    (node) => node.expandable
-  );
+  formatFoodChildData(arr: string[]) {
+    let newArr = [
+      ...arr.map((node: string) => {
+        return {
+          name: node,
+        };
+      }),
+    ];
+    return newArr;
+  }
 
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    (node) => node.level,
-    (node) => node.expandable,
-    (node) => node.children
-  );
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  formatTipsChildData(data: any, type: string) {
+    let newArr = [
+      {
+        name:
+          type === 'Volume'
+            ? `${type} is ${data.value} ${data.unit}`
+            : `start ${type} at ${data.value}° ${data.unit}`,
+      },
+    ];
+    return newArr;
+  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private storeService: StoreService
-  ) {
-    // this.dataSource.data = this.TREE_DATA;
-  }
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+    private storeService: StoreService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((val) => {
       this.beerId = val['id'];
     });
     this.onGetBeerDetails();
+    this.test();
+  }
+
+  test() {
+    this.cartSubscription = this.cartService.cart.subscribe((_cart) => {
+      this.isItemInCart = _cart.items.some((_item) => {
+        return _item.beer.id === +this.beerId;
+      });
+    });
+  }
+
+  onAddToCart(): void {
+    this.cartService.addToCart({
+      beer: this.beer[0],
+      quantity: 1,
+    });
+    this.test();
+  }
+
+  onRemoveFromCart(): void {
+    this.cartService.removeFromCart(+this.beerId);
+    this.test();
   }
 
   onGetBeerDetails() {
@@ -75,23 +102,51 @@ export class DetailsComponent implements OnInit, OnDestroy {
       .subscribe((_beer) => {
         this.beer = _beer;
         console.log(this.beer);
-        this.dataSource.data = [
+        this.ingredientsData = [
           {
             name: 'Hops',
-            children: _beer[0].ingredients.hops,
+            children: this.formatIngredientChildData(_beer[0].ingredients.hops),
           },
           {
             name: 'Malt',
-            children: _beer[0].ingredients.malt,
+            children: this.formatIngredientChildData(_beer[0].ingredients.malt),
           },
         ];
-        console.log(this.dataSource.data);
+        this.tipsData = [
+          {
+            name: 'Fermentation',
+            children: this.formatTipsChildData(
+              _beer[0].method.fermentation.temp,
+              'Fermentation'
+            ),
+          },
+          {
+            name: 'Mashing',
+            children: this.formatTipsChildData(
+              _beer[0].method.mash_temp[0].temp,
+              'Mashing'
+            ),
+          },
+          {
+            name: 'Volume',
+            children: this.formatTipsChildData(_beer[0].volume, 'Volume'),
+          },
+        ];
+        this.foodData = [
+          {
+            name: 'Foods',
+            children: this.formatFoodChildData(_beer[0].food_pairing),
+          },
+        ];
       });
   }
 
   ngOnDestroy(): void {
     if (this.beerSubscription) {
       this.beerSubscription.unsubscribe();
+    }
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
     }
   }
 }

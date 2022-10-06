@@ -1,75 +1,46 @@
-<div *ngIf="beer" class="max-w-7xl flex gap-36 mx-auto mt-24">
-  <div class="flex-1 flex justify-between items-center gap-20 p-10">
-    <img class="w-20" [src]="beer[0].image_url" />
-    <div>
-      <h3>{{ beer[0].name }}</h3>
-      <p>Dog Breed</p>
-      <p>{{ beer[0].description }}</p>
-    </div>
-  </div>
-  <div class="flex-1 p-10">
-    <div>
-      <h3>Ingredients:</h3>
-      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-        <!-- This is the tree node template for leaf nodes -->
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-          <!-- use a disabled button to provide padding for tree leaf -->
-          <button mat-icon-button disabled></button>
-          {{ node.name }}
-        </mat-tree-node>
-        <!-- This is the tree node template for expandable nodes -->
-        <mat-tree-node
-          *matTreeNodeDef="let node; when: hasChild"
-          matTreeNodePadding
-        >
-          <button
-            mat-icon-button
-            matTreeNodeToggle
-            [attr.aria-label]="'Toggle ' + node.name"
-          >
-            <mat-icon class="mat-icon-rtl-mirror">
-              {{
-                treeControl.isExpanded(node) ? "expand_more" : "chevron_right"
-              }}
-            </mat-icon>
+<div *ngIf="beer" class="max-w-7xl flex items-start gap-20 mx-auto mt-36">
+  <div class="flex-1 flex justify-between items-center gap-20">
+    <img class="w-32" [src]="beer[0].image_url" />
+    <mat-card class="example-card">
+      <mat-card-title>{{ beer[0].name }}</mat-card-title>
+      <mat-card-subtitle>{{ beer[0].tagline }}</mat-card-subtitle>
+      <mat-card-content>
+        <p>{{ beer[0].brewers_tips }}</p>
+        <p>{{ beer[0].description }}</p>
+        <div class="flex justify-between">
+          <p>Produce since: {{ beer[0].first_brewed }}</p>
+          <p>Alcohol: {{ beer[0].abv }}% ABV</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="flex gap-2">
+          <button mat-flat-button color="accent" (click)="onAddToCart()">
+            ADD TO CART
           </button>
-          {{ node.name }}
-        </mat-tree-node>
-      </mat-tree>
-
-      <!-- <h4>Hops:</h4>
-      <div class="grid gap-x-8 grid-cols-2">
-        <div
-          *ngFor="let hop of beer[0].ingredients.hops"
-          class="flex justify-between flex-wrap py-1 mb-2 border-b"
-        >
-          <div>
-            <p>Name: {{ hop.name }}</p>
-            <p>Attribute: {{ hop.attribute }}</p>
-          </div>
-          <div>
-            <p>add at the {{ hop.add }}</p>
-            <p>{{ hop.amount.value }} {{ hop.amount.unit }}</p>
-            <p></p>
-          </div>
+          <button
+            mat-flat-button
+            color="warn"
+            (click)="onRemoveFromCart()"
+            [disabled]="!isItemInCart"
+          >
+            REMOVE FROM CART
+          </button>
         </div>
-      </div>
-      <h4>Malt:</h4>
-      <div class="grid gap-x-8 grid-cols-2">
-        <div
-          *ngFor="let mal of beer[0].ingredients.malt"
-          class="flex justify-between flex-wrap py-1 mb-2 border-b"
-        >
-          <div>
-            <p>Name: {{ mal.name }}</p>
-          </div>
-          <div>
-            <p>{{ mal.amount.value }} {{ mal.amount.unit }}</p>
-            <p></p>
-          </div>
-        </div>
-      </div>
-      <span>yeast: {{ beer[0].ingredients.yeast }}</span> -->
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="flex-1">
+    <div class="mb-10">
+      <h3>Beer ingredients:</h3>
+      <app-tree [data]="ingredientsData"></app-tree>
+    </div>
+    <div class="mb-10">
+      <h3>Instructions and tips:</h3>
+      <app-tree [data]="tipsData"></app-tree>
+    </div>
+    <div>
+      <h3>Food pairing:</h3>
+      <app-tree [data]="foodData"></app-tree>
     </div>
   </div>
 </div>

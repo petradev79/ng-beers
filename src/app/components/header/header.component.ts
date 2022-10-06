@@ -34,9 +34,9 @@ export class HeaderComponent implements OnInit {
 
   getTotal() {}
 
-  onRemoveItem(item: CartItem): void {
-    this.cartService.removeFromCart(item);
-  }
+  // onRemoveItem(item: CartItem): void {
+  //   this.cartService.removeFromCart(item);
+  // }
 
   onClearCart() {
     this.cartService.clearCart();
