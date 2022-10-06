@@ -72,10 +72,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.beerId = val['id'];
     });
     this.onGetBeerDetails();
-    this.test();
+    this.onIsItemInCart();
   }
 
-  test() {
+  onIsItemInCart() {
     this.cartSubscription = this.cartService.cart.subscribe((_cart) => {
       this.isItemInCart = _cart.items.some((_item) => {
         return _item.beer.id === +this.beerId;
@@ -88,12 +88,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
       beer: this.beer[0],
       quantity: 1,
     });
-    this.test();
+    this.onIsItemInCart();
   }
 
   onRemoveFromCart(): void {
     this.cartService.removeFromCart(+this.beerId);
-    this.test();
+    this.onIsItemInCart();
   }
 
   onGetBeerDetails() {
