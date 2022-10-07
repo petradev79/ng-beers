@@ -10,6 +10,8 @@
       (columnsCountChange)="onColumnsUpdated($event)"
       (itemsPerPageChange)="onItemsPerPageUpdated($event)"
       (sortChange)="onSortUpdated($event)"
+      [sort]="sort"
+      [itemsPerPage]="perPage"
     ></app-list-header>
     <mat-grid-list gutterSize="16" [cols]="cols" [rowHeight]="rowHeight">
       <mat-grid-tile *ngFor="let beer of beers">

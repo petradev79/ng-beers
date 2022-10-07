@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NonNullableFormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { Beer, Filter } from 'src/app/models';
@@ -22,7 +23,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private storeService: StoreService) {}
 
   ngOnInit(): void {
-    this.onGetBeers();
+    const storage = localStorage.getItem('beersStoreData');
+    if (storage) {
+      const storageData = JSON.parse(storage);
+      this.cols = storageData.cols;
+      this.rowHeight = storageData.rowHeight;
+      this.perPage = storageData.perPage;
+      this.beers = storageData.beers;
+      this.filter = storageData.filter;
+      this.sort = storageData.sort;
+      console.log('Storge data: ', storageData);
+    } else {
+      console.log('No data in storage');
+      this.onGetBeers();
+    }
   }
 
   sortedArray(arr: Beer[]) {
@@ -39,7 +53,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onClearFilter() {
+    localStorage.removeItem('beersStoreData');
     this.filter = undefined;
+    this.cols = 4;
+    this.rowHeight = ROWS_HEIGHT[this.cols];
+    this.perPage = '25';
+    this.sort = 'up';
     this.onGetBeers();
   }
 
@@ -51,8 +70,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  onItemsPerPageUpdated(numberPerPage: number) {
-    this.perPage = numberPerPage.toString();
+  onItemsPerPageUpdated(numberPerPage: string) {
+    this.perPage = numberPerPage;
     this.onGetBeers();
   }
 
@@ -67,6 +86,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    localStorage.setItem(
+      'beersStoreData',
+      JSON.stringify({
+        beers: this.beers,
+        cols: this.cols,
+        rowHeight: this.rowHeight,
+        perPage: this.perPage,
+        filter: this.filter,
+        sort: this.sort,
+      })
+    );
     if (this.beersSubscription) {
       this.beersSubscription.unsubscribe();
     }

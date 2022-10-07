@@ -30,13 +30,13 @@
           <mat-icon>expand_more</mat-icon>
         </button>
         <mat-menu #menu="matMenu" xPosition="after">
-          <button (click)="onItemsPerPageChange(15)" mat-menu-item>
+          <button (click)="onItemsPerPageChange('15')" mat-menu-item>
             15 beers
           </button>
-          <button (click)="onItemsPerPageChange(25)" mat-menu-item>
+          <button (click)="onItemsPerPageChange('25')" mat-menu-item>
             25 beers
           </button>
-          <button (click)="onItemsPerPageChange(50)" mat-menu-item>
+          <button (click)="onItemsPerPageChange('50')" mat-menu-item>
             50 beers
           </button>
         </mat-menu>

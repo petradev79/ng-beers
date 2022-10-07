@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-list-header',
@@ -6,16 +6,16 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class ListHeaderComponent implements OnInit {
   @Output() columnsCountChange = new EventEmitter<number>();
-  @Output() itemsPerPageChange = new EventEmitter<number>();
+  @Output() itemsPerPageChange = new EventEmitter<string>();
   @Output() sortChange = new EventEmitter<string>();
-  itemsPerPage = 25;
-  sort = 'up';
+  @Input() itemsPerPage!: string;
+  @Input() sort!: string;
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  onItemsPerPageChange(numberPerPage: number): void {
+  onItemsPerPageChange(numberPerPage: string): void {
     this.itemsPerPageChange.emit(numberPerPage);
     this.itemsPerPage = numberPerPage;
   }
